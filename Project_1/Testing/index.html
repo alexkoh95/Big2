@@ -17,16 +17,19 @@
   <body>
     <div class="cards">
       <div class="player1-deck deck"></div>
-      <div class="player1-card-slot card-slot deck"></div>
-      <div class="player2-deck deck">456</div>
-      <div class="player2-card-slot card-slot deck"></div>
+      <div class="player1-card-slot card-slot deck row">Player1Hand</div>
+      <div class="player2-card-slot card-slot deck row">Player2Hand</div>
     </div>
-    <div class="table"></div>
+    <div class="staging deck card">Staging Area</div>
+    <div class="table">
+      <div class="gameTable deck card"></div>
+    </div>
     <button class="Start">Start Game & Deal Cards</button>
-    <button>Play Card</button>
+    <button class="playCard">Play Card</button>
     <button>Pass</button>
     <button class="Player1Flip">Flip Player 1 Cards</button>
     <button class="Player2Flip">Flip Player 2 Cards</button>
+    <button class="PlayerWin">Player Win</button>
     <script src="script.js" defer></script>
   </body>
 </html>
