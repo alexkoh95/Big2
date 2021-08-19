@@ -150,11 +150,6 @@ function startGameDealCards() {
     cardDivPlayer2.dataset.value = `${player2Deck.cards[i].value} ${player2Deck.cards[i].suit}`;
     cardDivPlayer2.setAttribute("value", `${player2Deck.cards[i].value}`);
     cardDivPlayer2.setAttribute("suit", `${player2Deck.cards[i].suit}`);
-    // cardDivPlayer2.addEventListener("click", (e) => {
-    //   const selectedCard = e.target.parentNode;
-    //   const stagingArea = document.querySelector(".staging");
-    //   stagingArea.append(selectedCard);
-    // });
     player2CardSlot.append(cardDivPlayer2);
   }
   console.log(player1Deck.cards[1].suit);
@@ -164,11 +159,8 @@ function startGameDealCards() {
   for (let i = 0; i < player2Cards.length; i++) {
     player2Cards[i].classList.toggle("is-flipped");
   }
-  // cardComparison(player1Deck.cards[1], player2Deck.cards[1]);
 }
 
-//awesome! This function is working. It creates a deck of cards, shuffles it, and splits it to the two players
-//the for loops also creates two "hands" and displays it in the respective player slots (using bootstrap)
 
 //////////
 // Start Button
@@ -183,9 +175,6 @@ document.querySelector(".Start").addEventListener("click", (e) => {
 // Select Card (click on card to move it to the "staging" area)
 ///////
 
-//First create a conditional function
-// write event listener in a function. For example using a conditional (class is present, add event listener)
-
 const cardsClick = document.querySelector(".cards");
 cardsClick.addEventListener("click", (e) => {
   if (e.target.classList.contains("card")) {
@@ -195,8 +184,6 @@ cardsClick.addEventListener("click", (e) => {
     stagingArea.append(selectedCard);
   }
 });
-
-//Awesome, this works. This sends the card from the player's hand to the staging area.
 
 /////////
 // Creating a "flip" for the players to flip their cards
@@ -227,9 +214,14 @@ document.querySelector(".Player2Flip").addEventListener("click", (e) => {
 // Sending the cards from the Staging area to be played
 ////////
 
-//This involves two things.
+//Purpose:
 //First, the button to push the card to the table. (Play Card Button)
 //Second, the game logic to push the card (if card is > value on table, replace card with card in Staging area)
+//It involves the following logic 
+// (1) Check if staging area is empty (return "You must play a card" if empty). 
+// (2) If game table is empty always play card
+// (3) If game table has card apply function checkCardValue to compare 
+// (4) If game table card > staging area card, return error message AND return card to respective hand 
 
 document.querySelector(".playCard").addEventListener("click", (e) => {
   const selectedCardStagingArea = document.querySelector(".selectedCard");
@@ -258,14 +250,11 @@ document.querySelector(".playCard").addEventListener("click", (e) => {
     cardComparison(
       selectedCardStagingArea,
       document.querySelector(".playerPlayedCard")
-      //the problem is here. This selector is selecting the previous value even though the card has been returned to the hand
     )
-    // console.log(selectedCardStagingArea.getAttribute("value"))
   ) {
     if (selectedCardStagingArea.classList.contains("player1Hand")) {
       selectedCardStagingArea.classList.remove("player1Hand");
       selectedCardStagingArea.classList.add("playerPlayedCard");
-      //need to create a remove line to remove the present node... gameTable.childNodes.
       gameTable.removeChild(gameTable.childNodes[0]);
       gameTable.append(selectedCardStagingArea);
     } else {
@@ -290,8 +279,7 @@ document.querySelector(".playCard").addEventListener("click", (e) => {
   }
 });
 
-//Great, the function to move the card from the staging area(".selectedCard") to the game table works
-// Now I need to set up the game logic
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -307,6 +295,8 @@ document.querySelector(".pass").addEventListener("click", (e) => {
 /////////
 // Win Alert
 ////////
+
+// Win alert + remove cards on table on losing player's hand 
 
 document.querySelector(".PlayerWin").addEventListener("click", (e) => {
   const player1CardSlot = document.querySelector(".player1-card-slot");
@@ -325,3 +315,11 @@ document.querySelector(".PlayerWin").addEventListener("click", (e) => {
     alert("Game is not over until a player finishes their hand!");
   }
 });
+
+
+//Future changes
+
+//1. sort cards by value upon dealing 
+//2. Do doubles/combination hands 
+//3. 4 players 
+//4. Automate the "flip" function to game logic (e.g. always flip cards on opponent turn)
