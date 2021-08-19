@@ -68,3 +68,21 @@
   color: black !important;
   background-color: black !important;
 }
+
+.player1banner {
+  background-color: green;
+  text-align: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.player2banner {
+  background-color: orange;
+  text-align: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+body {
+  background-color: teal;
+}

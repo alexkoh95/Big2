@@ -160,6 +160,10 @@ function startGameDealCards() {
   console.log(player1Deck.cards[1].suit);
   console.log(player2Deck.cards);
   console.log(player2Deck.cards[3]);
+  const player2Cards = document.querySelectorAll(".player2Hand");
+  for (let i = 0; i < player2Cards.length; i++) {
+    player2Cards[i].classList.toggle("is-flipped");
+  }
   // cardComparison(player1Deck.cards[1], player2Deck.cards[1]);
 }
 
@@ -183,7 +187,6 @@ document.querySelector(".Start").addEventListener("click", (e) => {
 // write event listener in a function. For example using a conditional (class is present, add event listener)
 
 const cardsClick = document.querySelector(".cards");
-
 cardsClick.addEventListener("click", (e) => {
   if (e.target.classList.contains("card")) {
     const selectedCard = e.target;
@@ -230,9 +233,12 @@ document.querySelector(".Player2Flip").addEventListener("click", (e) => {
 
 document.querySelector(".playCard").addEventListener("click", (e) => {
   const selectedCardStagingArea = document.querySelector(".selectedCard");
+  const stagingArea = document.querySelector(".staging");
   const gameTable = document.querySelector(".gameTable");
-  // console.log(gameTable.childNodes[0]);
-  if (gameTable.childNodes.length === 0) {
+  console.log(stagingArea.childNodes.length);
+  if (stagingArea.childNodes.length === 0) {
+    alert("You must play a card!");
+  } else if (gameTable.childNodes.length === 0) {
     if (selectedCardStagingArea.classList.contains("player1Hand")) {
       selectedCardStagingArea.classList.remove("player1Hand");
       selectedCardStagingArea.classList.add("playerPlayedCard");
@@ -243,13 +249,6 @@ document.querySelector(".playCard").addEventListener("click", (e) => {
       console.log(
         document.querySelector(".playerPlayedCard").getAttribute("suit")
       );
-      // console.log(gameTable.childNodes[0]);
-      // console.log(
-      //   CARD_VALUE_MAP[selectedCardStagingArea.getAttribute("value")] *
-      //     SUIT_VALUE_MAP[selectedCardStagingArea.getAttribute("suit")]
-      // );
-      //   CARD_VALUE_MAP[cardOne.getAttribute("value")] *
-      // SUIT_VALUE_MAP[cardOne.getAttribute("suit")];
     } else {
       selectedCardStagingArea.classList.remove("player2Hand");
       selectedCardStagingArea.classList.add("playerPlayedCard");
@@ -259,10 +258,10 @@ document.querySelector(".playCard").addEventListener("click", (e) => {
     cardComparison(
       selectedCardStagingArea,
       document.querySelector(".playerPlayedCard")
+      //the problem is here. This selector is selecting the previous value even though the card has been returned to the hand
     )
     // console.log(selectedCardStagingArea.getAttribute("value"))
   ) {
-    console.log("hello!");
     if (selectedCardStagingArea.classList.contains("player1Hand")) {
       selectedCardStagingArea.classList.remove("player1Hand");
       selectedCardStagingArea.classList.add("playerPlayedCard");
@@ -277,6 +276,17 @@ document.querySelector(".playCard").addEventListener("click", (e) => {
     }
   } else {
     alert("You must play a card of higher value!");
+    if (selectedCardStagingArea.classList.contains("player1Hand")) {
+      selectedCardStagingArea.classList.remove("selectedCard");
+      document
+        .querySelector(".player1-card-slot")
+        .appendChild(selectedCardStagingArea);
+    } else {
+      selectedCardStagingArea.classList.remove("selectedCard");
+      document
+        .querySelector(".player2-card-slot")
+        .appendChild(selectedCardStagingArea);
+    }
   }
 });
 
@@ -286,15 +296,32 @@ document.querySelector(".playCard").addEventListener("click", (e) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////
+// Pass Button
+////////
+
+document.querySelector(".pass").addEventListener("click", (e) => {
+  const gameTable = document.querySelector(".gameTable");
+  gameTable.removeChild(gameTable.childNodes[0]);
+});
+
+/////////
 // Win Alert
 ////////
 
 document.querySelector(".PlayerWin").addEventListener("click", (e) => {
-  if (player1CardSlot.length === "0") {
+  const player1CardSlot = document.querySelector(".player1-card-slot");
+  const player2CardSlot = document.querySelector(".player2-card-slot");
+  if (player1CardSlot.childNodes.length === 0) {
     alert("Player 1 wins!");
-  } else if (player2CardSlot.length === "0") {
+    while (player2CardSlot.firstChild) {
+      player2CardSlot.removeChild(player2CardSlot.lastChild);
+    }
+  } else if (player2CardSlot.childNodes.length === 0) {
     alert("Player 2 wins!");
+    while (player1CardSlot.firstChild) {
+      player1CardSlot.removeChild(player1CardSlot.lastChild);
+    }
   } else {
-    alert("Why you trying to end the game early?");
+    alert("Game is not over until a player finishes their hand!");
   }
 });
