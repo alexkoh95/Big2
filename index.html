@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Big 2 Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Long+Cang&display=swap");
+    </style>
+  </head>
+  <body>
+    <div class="gameBanner col-sem-12">大弟 / Big 2</div>
+    <div class="player1banner col-sm-12">Player 1 Hand</div>
+    <div class="cards">
+      <div class="player1-card-slot card-slot deck row"></div>
+      <div class="player2banner col-sm-12">Player 2 Hand</div>
+      <div class="player2-card-slot card-slot deck row"></div>
+    </div>
+    <div class="stagingAreaBanner col-sm-12">Staging Area</div>
+    <div class="staging deck card"></div>
+    <div class="table">
+      <div class="TableBanner col-sm-12">Table</div>
+      <div class="gameTable deck card"></div>
+    </div>
+    <button class="Start">Start Game & Deal Cards</button>
+    <button class="playCard">Play Card</button>
+    <button class="pass">Pass</button>
+    <button class="Player1Flip">Flip Player 1 Cards</button>
+    <button class="Player2Flip">Flip Player 2 Cards</button>
+    <button class="PlayerWin">Player Win</button>
+    <script src="script.js" defer></script>
+  </body>
+</html>
